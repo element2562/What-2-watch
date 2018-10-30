@@ -4,8 +4,8 @@
     "windowsAuthentication": false, 
     "anonymousAuthentication": true, 
     "iisExpress": {
-      "applicationUrl": "http://localhost:52603",
-      "sslPort": 44311
+      "applicationUrl": "http://localhost:57130",
+      "sslPort": 44395
     }
   },
   "profiles": {
@@ -17,7 +17,7 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
-    "WebApplication1": {
+    "What2WatchBackend": {
       "commandName": "Project",
       "launchBrowser": true,
       "launchUrl": "api/values",
