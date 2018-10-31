@@ -5,63 +5,63 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using What2WatchBackend;
-using What2WatchBackend.Data;
+using What2Watch.Data;
+using What2Watch.Models;
 
-namespace What2WatchBackend.Controllers
+namespace What2Watch.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class UsersController : ControllerBase
+    public class MoviesController : ControllerBase
     {
         private readonly ApplicationDbContext _context;
 
-        public UsersController(ApplicationDbContext context)
+        public MoviesController(ApplicationDbContext context)
         {
             _context = context;
         }
 
-        // GET: api/Users
+        // GET: api/Movies
         [HttpGet]
-        public IEnumerable<User> GetUser()
+        public IEnumerable<Movie> GetMovie()
         {
-            return _context.User;
+            return _context.Movie;
         }
 
-        // GET: api/Users/5
+        // GET: api/Movies/5
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetUser([FromRoute] int id)
+        public async Task<IActionResult> GetMovie([FromRoute] int id)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            var user = await _context.User.FindAsync(id);
+            var movie = await _context.Movie.FindAsync(id);
 
-            if (user == null)
+            if (movie == null)
             {
                 return NotFound();
             }
 
-            return Ok(user);
+            return Ok(movie);
         }
 
-        // PUT: api/Users/5
+        // PUT: api/Movies/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutUser([FromRoute] int id, [FromBody] User user)
+        public async Task<IActionResult> PutMovie([FromRoute] int id, [FromBody] Movie movie)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (id != user.UserId)
+            if (id != movie.MovieId)
             {
                 return BadRequest();
             }
 
-            _context.Entry(user).State = EntityState.Modified;
+            _context.Entry(movie).State = EntityState.Modified;
 
             try
             {
@@ -69,7 +69,7 @@ namespace What2WatchBackend.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!UserExists(id))
+                if (!MovieExists(id))
                 {
                     return NotFound();
                 }
@@ -82,45 +82,45 @@ namespace What2WatchBackend.Controllers
             return NoContent();
         }
 
-        // POST: api/Users
+        // POST: api/Movies
         [HttpPost]
-        public async Task<IActionResult> PostUser([FromBody] User user)
+        public async Task<IActionResult> PostMovie([FromBody] Movie movie)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            _context.User.Add(user);
+            _context.Movie.Add(movie);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetUser", new { id = user.UserId }, user);
+            return CreatedAtAction("GetMovie", new { id = movie.MovieId }, movie);
         }
 
-        // DELETE: api/Users/5
+        // DELETE: api/Movies/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteUser([FromRoute] int id)
+        public async Task<IActionResult> DeleteMovie([FromRoute] int id)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            var user = await _context.User.FindAsync(id);
-            if (user == null)
+            var movie = await _context.Movie.FindAsync(id);
+            if (movie == null)
             {
                 return NotFound();
             }
 
-            _context.User.Remove(user);
+            _context.Movie.Remove(movie);
             await _context.SaveChangesAsync();
 
-            return Ok(user);
+            return Ok(movie);
         }
 
-        private bool UserExists(int id)
+        private bool MovieExists(int id)
         {
-            return _context.User.Any(e => e.UserId == id);
+            return _context.Movie.Any(e => e.MovieId == id);
         }
     }
 }

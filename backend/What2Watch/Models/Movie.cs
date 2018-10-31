@@ -4,15 +4,12 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace What2WatchBackend.Models
+namespace What2Watch.Models
 {
     public class Movie
     {
         [Key]
         public int MovieId { get; set; }
-
-        [Required]
-        public int MovieDbId { get; set; }
 
         [Required]
         public string Title { get; set; }
@@ -23,8 +20,10 @@ namespace What2WatchBackend.Models
         [Required]
         public double Rating { get; set; }
 
-        public int? UserRating { get; set; }
+        [Required]
+        public double? UserRating { get; set; }
 
+        [Required]
         public int UserId { get; set; }
 
         public User User { get; set; }

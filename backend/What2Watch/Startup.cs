@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.AzureADB2C.UI;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -15,10 +16,10 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
-using What2WatchBackend.Data;
-using What2WatchBackend.Models;
+using What2Watch.Data;
+using What2Watch.Models;
 
-namespace What2WatchBackend
+namespace What2Watch
 {
     public class Startup
     {
@@ -36,7 +37,9 @@ namespace What2WatchBackend
                options.UseSqlServer(
                    Configuration.GetConnectionString("DefaultConnection")));
 
-
+            services.AddDefaultIdentity<User>()
+                .AddRoles<IdentityRole>()
+                .AddEntityFrameworkStores<ApplicationDbContext>();
 
             services.AddMvc()
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_1)
@@ -51,20 +54,23 @@ namespace What2WatchBackend
             }));
 
             // Set up JWT authentication service
-            //services.AddAuthentication(options => {
-            //    options.DefaultAuthenticateScheme = "Jwt";
-            //    options.DefaultChallengeScheme = "Jwt";
-            //}).AddJwtBearer("Jwt", options => {
-            //    options.TokenValidationParameters = new TokenValidationParameters
-            //    {
-            //        ValidateAudience = false,
-            //        ValidateIssuer = false,
-            //        ValidateIssuerSigningKey = true,
-            //        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("7A735D7B-1A19-4D8A-9CFA-99F55483013F")),
-            //        ValidateLifetime = true, //validate the expiration and not before values in the token
-            //        ClockSkew = TimeSpan.FromMinutes(5) //5 minute tolerance for the expiration date
-            //    };
-            //});
+            services.AddAuthentication(options => {
+                options.DefaultAuthenticateScheme = "Jwt";
+                options.DefaultChallengeScheme = "Jwt";
+
+            }).AddJwtBearer("Jwt", options => {
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateAudience = false,
+                    ValidateIssuer = false,
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("7A735D7B-1A19-4D8A-9CFA-99F55483013F")),
+                    ValidateLifetime = true, //validate the expiration and not before values in the token
+                    ClockSkew = TimeSpan.FromMinutes(5) //5 minute tolerance for the expiration date
+                };
+
+
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -79,7 +85,7 @@ namespace What2WatchBackend
             {
                 app.UseHsts();
             }
-
+            app.UseCors("What2WatchPolicy");
             app.UseAuthentication();
             app.UseMvc();
         }
