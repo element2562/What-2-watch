@@ -7,7 +7,9 @@ export default class extends Component {
         username: "",
         password: "",
         registerUsername: "",
-        registerPassword: ""
+        registerPassword: "",
+        firstname: "",
+        lastname: ""
     }
     handleShow = () => {
         this.setState({show: true});
@@ -15,18 +17,18 @@ export default class extends Component {
     handleClose = () => {
         this.setState({show: false});
     }
-    loginCheck = () => {
-        Api.getUsers(this.state.username)
-        .then(response => { 
-            if(response.length > 0 && response[0].password === this.state.password) {
-                sessionStorage.setItem("User", response[0].id);
-                sessionStorage.setItem("Username", response[0].username);
-                window.location.reload();
-            } else {
-                alert("The username or password you entered is incorrect.");
-            }
-        })
-    }
+    // loginCheck = () => {
+    //     Api.getUsers(this.state.username)
+    //     .then(response => { 
+    //         if(response.length > 0 && response[0].password === this.state.password) {
+    //             sessionStorage.setItem("User", response[0].id);
+    //             sessionStorage.setItem("Username", response[0].username);
+    //             window.location.reload();
+    //         } else {
+    //             alert("The username or password you entered is incorrect.");
+    //         }
+    //     })
+    // }
     handleRegister = (e) => {
         e.preventDefault()
 
@@ -37,10 +39,10 @@ export default class extends Component {
                 "Content-Type": "application/json"
             },
             body: JSON.stringify({
-                Username: "jacob@jacob.com", //this.state.username,
-                Password: "jacob", //this.state.password
-                FirstName: "Jacob",
-                LastName: "Henderson"
+                Username: this.state.registerUsername, 
+                Password: this.state.registerPassword,
+                FirstName: this.state.firstname,
+                LastName: this.state.lastname
             })
         })
         .then(res => res.text())
@@ -48,6 +50,23 @@ export default class extends Component {
             localStorage.setItem("What2Watch_token", OfficialAPIToken)
         })
 
+    }
+    handleLogin = (e) => {
+        e.preventDefault();
+
+        fetch("https://localhost:5001/api/token", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                Username: this.state.username,
+                Password: this.state.password,
+            })
+        })        .then(res => res.text())
+        .then(OfficialAPIToken => {
+            localStorage.setItem("What2Watch_token", OfficialAPIToken)
+        })
     }
     render() {
         return (
@@ -65,6 +84,12 @@ export default class extends Component {
                 <p><em>Create a username and password and click register to continue!</em></p>
                 <Form>
                 <InputGroup>
+                <label>First Name</label><input onChange={e => {
+                    this.setState({firstname: e.target.value})
+                }} />
+                <label>First Name</label><input onChange={e => {
+                    this.setState({lastname: e.target.value})
+                }} />
                 <label>Username</label><input  onChange={e => {
                     this.setState({registerUsername: e.target.value})
                 }}/>
@@ -93,7 +118,7 @@ export default class extends Component {
                 <FormControl type="password" id="password" onChange={e => {
                     this.setState({password: e.target.value});
                 }} /> <br />
-                <Button onClick={this.handleRegister}>Login</Button>
+                <Button onClick={this.handleLogin}>Login</Button>
                 <Button onClick={this.handleShow}>Register</Button>
             </Form>
             </FormGroup>
