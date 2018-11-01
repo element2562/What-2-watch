@@ -26,16 +26,15 @@ const Api = Object.create({}, {
         }
     },
     getUsers: {
-        value: (username) => {
-            return fetch(`http://localhost:5001/api/users?username=${username}`, {
+        value: (token) => {
+            return fetch(`https://localhost:5001/api/users`, {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json; charset=utf-8",
-                    "Authorization": `Bearer ${localStorage.getItem("What2Watch_token")}`
+                    "Authorization": `Bearer ${token}`
                 }
             })
             .then(e => e.json())
-            .then(r => console.log(r))
         }
     },
 })

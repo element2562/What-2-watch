@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Form, Well, FormGroup, InputGroup, FormControl, ControlLabel, Button, Modal, PageHeader } from "react-bootstrap";
 import Api from "./ApiManager";
+import { BrowserRouter, Redirect, Switch } from "react-router-dom";
 export default class extends Component {
     state = {
         show: false,
@@ -9,7 +10,7 @@ export default class extends Component {
         registerUsername: "",
         registerPassword: "",
         firstname: "",
-        lastname: ""
+        lastname: "",
     }
     handleShow = () => {
         this.setState({show: true});
@@ -47,9 +48,9 @@ export default class extends Component {
         })
         .then(res => res.text())
         .then(OfficialAPIToken => {
-            localStorage.setItem("What2Watch_token", OfficialAPIToken)
+            sessionStorage.setItem("What2Watch_token", OfficialAPIToken);
+            this.props.history.push("/");
         })
-
     }
     handleLogin = (e) => {
         e.preventDefault();
@@ -65,7 +66,8 @@ export default class extends Component {
             })
         })        .then(res => res.text())
         .then(OfficialAPIToken => {
-            localStorage.setItem("What2Watch_token", OfficialAPIToken)
+            sessionStorage.setItem("What2Watch_token", OfficialAPIToken)
+            this.props.history.push("/");
         })
     }
     render() {
