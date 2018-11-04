@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using What2Watch.Data;
 
 namespace What2Watch.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20181102154318_useridstring")]
+    partial class useridstring
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -235,7 +237,7 @@ namespace What2Watch.Migrations
                     b.HasDiscriminator().HasValue("User");
 
                     b.HasData(
-                        new { Id = "dada8e7a-2cbc-4af9-a8fb-99ed3116e028", AccessFailedCount = 0, ConcurrencyStamp = "f88a77c1-dc88-4335-b6b3-6bae03c09398", Email = "jacob@jacob.com", EmailConfirmed = true, LockoutEnabled = false, NormalizedEmail = "JACOB@JACOB.COM", NormalizedUserName = "JACOB@JACOB.COM", PasswordHash = "AQAAAAEAACcQAAAAEOcBEXV8ftB38oOR5QDhKgd+XcG8e8zsU9yd+MktbCQaYWyqO2+HGoqCsYbaReX0Fw==", PhoneNumberConfirmed = false, SecurityStamp = "99604ecb-8085-4ea9-bf3b-93108b43d136", TwoFactorEnabled = false, UserName = "jacob@jacob.com", FirstName = "Jacob", LastName = "Henderson" }
+                        new { Id = "594dad7f-f313-4dcf-bf78-c506f89cb016", AccessFailedCount = 0, ConcurrencyStamp = "2ee3ad20-e5c4-47f8-8f81-6dbd5c7fbb92", Email = "jacob@jacob.com", EmailConfirmed = true, LockoutEnabled = false, NormalizedEmail = "JACOB@JACOB.COM", NormalizedUserName = "JACOB@JACOB.COM", PasswordHash = "AQAAAAEAACcQAAAAEJOOTO5lphogxtfGpETLw6e8F+Sbuly8cdOHK9yRDbLxEBd0xRsOZKXG9X2XeOnolw==", PhoneNumberConfirmed = false, SecurityStamp = "72f267f4-3bf4-4224-9ab4-d9a4b5bb5347", TwoFactorEnabled = false, UserName = "jacob@jacob.com", FirstName = "Jacob", LastName = "Henderson" }
                     );
                 });
 

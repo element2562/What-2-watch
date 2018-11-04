@@ -12,3 +12,9 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
+
+.SearchCard {
+  width: 50%; 
+  margin: 10px auto;
+  text-align: center;
+}

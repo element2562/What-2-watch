@@ -38,28 +38,38 @@ const Api = Object.create({}, {
         }
     },
     getUsersMovies: {
-        value: () => {
-            return fetch("https://localhost:5001/api/movies")
-            .then(res => res.json());
+        value: (token) => {
+            return fetch("https://localhost:5001/api/movies", {
+                method: "GET",
+                headers: {
+                    "Authorize": `bearer ${token}`,
+                    "Content-Type": "application/json; charset=utf-8"
+                    // "Accept": "application/json",
+                }
+            })
+            // .then(res => res.json())
         }
     },
     addMovieToLibrary: {
-        value: (title, summary, rating, picture, userid) => {
+        value: (token, title, summary, rating, extapi, picture) => {
             return fetch("https://localhost:5001/api/movies",
             {
                 method: "POST",
                 headers: {
-                    "Content-Type": "application/json; charset=utf-8"
+                    "Content-Type": "application/json; charset=utf-8",
+                    "Authorize": `bearer ${token}`,
+                    
                 },
-                body: {
+                body: JSON.stringify({
                     Title: title,
                     Summary: summary,
                     Rating: rating,
+                    ExtApiId: extapi,
                     Picture: picture,
-                    UserId: userid
-                }
+                })
             }
         )
+        .then(res => res.json())
         }
     },
     searchForMovie: {

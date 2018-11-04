@@ -7,26 +7,32 @@ import Api from "./Components/ApiManager";
 import AddMovies from "./Components/AddMovies";
 export default class extends Component {
     state = {
-        userInfo: {}
+        userInfo: {},
+        executed: false
     }
     isAuthenticated = () => sessionStorage.getItem("What2Watch_token") !== null;
     render(){
         if(this.isAuthenticated())
         {
+            if(this.state.executed === false){
             Api.getUsers(sessionStorage.getItem("What2Watch_token"))
             .then(res => {
                 this.setState({
-                    userInfo: res
+                    userInfo: res,
+                    executed: true
                 })
+                
             })
-
+        }
             return(
                 <React.Fragment>
                 <Route path="/" component={NavBar} />
                 <Route exact path="/" render={props => 
                     <MovieLibrary {...props} userInfo={this.state.userInfo} />
                 } />
-                <Route exact path="/addmovies" component={AddMovies} />
+                <Route exact path="/addmovies" render={props =>
+                    <AddMovies {...props} userInfo={this.state.userInfo} />
+                } />
                 {/* <Route exact path="/addmovies" component={Addmo} */}
                 </React.Fragment>
             )

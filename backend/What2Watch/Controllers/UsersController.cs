@@ -12,23 +12,22 @@ using Microsoft.AspNetCore.Cors;
 namespace What2Watch.Controllers
 {
 
-    [Route("api/user")]
+    [Route("api/[controller]")]
     [ApiController]
 
-    public class UserController : ControllerBase
+    public class UsersController : ControllerBase
     {
         private readonly UserManager<User> _userManager;
         private readonly ApplicationDbContext _context;
 
-        public UserController(ApplicationDbContext context, UserManager<User> user)
+        public UsersController(ApplicationDbContext context, UserManager<User> user)
         {
             _userManager = user;
             _context = context;
         }
 
-        private Task<User> GetCurrentUserAsync() => _userManager.GetUserAsync(HttpContext.User);
 
-        // GET api/values
+        // GET api/users/getuser
         [HttpGet]
         [EnableCors("What2WatchPolicy")]
         [Authorize]

@@ -10,8 +10,13 @@ export default class MovieLibrary extends Component
 
     componentDidMount()
     {      
-
-        
+        Api.getUsersMovies(sessionStorage.getItem("What2Watch_token"))
+        .then(res => res.json())
+        .then(res => {
+            this.setState({
+                movies: res
+            })
+        })
     }
 
     render()
@@ -19,7 +24,10 @@ export default class MovieLibrary extends Component
         if(this.state.movies.length > 0)
         {
             return(
-                <p>you got movies</p>
+                <React.Fragment>
+                <PageHeader id="libraryTitle">{this.props.userInfo.firstName} {this.props.userInfo.lastName}'s Library</PageHeader>
+               <p>you got movies</p>
+               </React.Fragment>
             )
         }
         else {

@@ -67,7 +67,6 @@ export default class extends Component {
         })        .then(res => res.text())
         .then(OfficialAPIToken => {
             sessionStorage.setItem("What2Watch_token", OfficialAPIToken)
-            Api.getUsers(sessionStorage.getItem("What2Watch_token"))
             this.props.history.push("/");
 
         })
