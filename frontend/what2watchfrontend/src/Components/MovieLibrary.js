@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { PageHeader } from "react-bootstrap";
 import Api from "./ApiManager";
-
+import LibraryMovies from "./LibraryMovies";
 export default class MovieLibrary extends Component 
 {
     state = {
@@ -11,7 +11,6 @@ export default class MovieLibrary extends Component
     componentDidMount()
     {      
         Api.getUsersMovies(sessionStorage.getItem("What2Watch_token"))
-        .then(res => res.json())
         .then(res => {
             this.setState({
                 movies: res
@@ -26,7 +25,9 @@ export default class MovieLibrary extends Component
             return(
                 <React.Fragment>
                 <PageHeader id="libraryTitle">{this.props.userInfo.firstName} {this.props.userInfo.lastName}'s Library</PageHeader>
-               <p>you got movies</p>
+               {this.state.movies.map(movie => (
+                   <LibraryMovies movie={movie} />
+               ))}
                </React.Fragment>
             )
         }

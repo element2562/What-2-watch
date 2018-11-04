@@ -42,12 +42,13 @@ const Api = Object.create({}, {
             return fetch("https://localhost:5001/api/movies", {
                 method: "GET",
                 headers: {
-                    "Authorize": `bearer ${token}`,
-                    "Content-Type": "application/json; charset=utf-8"
-                    // "Accept": "application/json",
+                    "Authorization": `bearer ${token}`,
+                    "Content-Type": "application/json",
+                    "Accept": "application/json",
+                    "Access-Control-Allow-Origin": "*"
                 }
             })
-            // .then(res => res.json())
+            .then(res => res.json())
         }
     },
     addMovieToLibrary: {
@@ -57,7 +58,7 @@ const Api = Object.create({}, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json; charset=utf-8",
-                    "Authorize": `bearer ${token}`,
+                    "Authorization": `bearer ${token}`,
                     
                 },
                 body: JSON.stringify({
@@ -82,6 +83,25 @@ const Api = Object.create({}, {
                 }
             })
             .then(res => res.json())
+        }
+    },
+    addPersonalRating: {
+        value: (token, title, summary, picture, rating, yourRating, extapiid, userid) => {
+            return fetch("https://localhost:5001/api/movies", {
+                method: "PUT",
+                headers: {
+                    "Authorization": `bearer ${token}`
+                },
+                body: JSON.stringify({
+                    Title: title,
+                    Summary: summary,
+                    Picture: picture,
+                    Rating: rating,
+                    UserRating: yourRating,
+                    ExtApiId: extapiid,
+                    UserId: userid
+                })
+            })
         }
     }
 })

@@ -26,9 +26,9 @@ export default class extends Component {
                     }
                     }} />
             </Form>
-            <div class="searchContainer">
+            <div className="searchContainer">
                     {this.state.results.map((movie, index) => (
-                        <EachResult id={index} movie={movie} results={this.state.results} index={index} userInfo={this.props.userInfo} />
+                        <EachResult key={index} id={index} movie={movie} results={this.state.results} index={index} userInfo={this.props.userInfo} />
                     ))}
             </div>
             </React.Fragment>

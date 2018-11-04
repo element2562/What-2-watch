@@ -26,11 +26,12 @@ namespace What2Watch.Controllers
         // GET: api/Movies
         [HttpGet]
         [Authorize]
+        //[EnableCors ("What2WatchPolicy")]
         public async Task<IEnumerable<Movie>> GetMovie()
         {
             string userName = User.Identity.Name;
             User user = await _context.User.SingleAsync(u => u.UserName == userName);
-            var userMovies = _context.Movie.Where(r => r.UserId == user.Id).ToList();
+            var userMovies = _context.Movie.Where(r => r.UserId == user.Id);
             return userMovies;
         }
 
