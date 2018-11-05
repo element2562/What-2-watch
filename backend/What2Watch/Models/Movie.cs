@@ -18,13 +18,18 @@ namespace What2Watch.Models
         public string Summary { get; set; }
 
         [Required]
+        public string Picture { get; set; }
+
+        [Required]
+        public int ExtApiId { get; set; }
+
+        [Required]
         public double Rating { get; set; }
 
-        [Required]
         public double? UserRating { get; set; }
 
-        [Required]
-        public int UserId { get; set; }
+        //[Required]
+        public string UserId { get; set; }
 
         public User User { get; set; }
     }

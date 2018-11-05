@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using What2Watch.Data;
 
 namespace What2Watch.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20181101183017_extapiidmovie")]
+    partial class extapiidmovie
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -208,14 +210,15 @@ namespace What2Watch.Migrations
                     b.Property<string>("Title")
                         .IsRequired();
 
-                    b.Property<string>("UserId")
-                        .IsRequired();
+                    b.Property<int>("UserId");
+
+                    b.Property<string>("UserId1");
 
                     b.Property<double?>("UserRating");
 
                     b.HasKey("MovieId");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("UserId1");
 
                     b.ToTable("Movie");
                 });
@@ -235,7 +238,7 @@ namespace What2Watch.Migrations
                     b.HasDiscriminator().HasValue("User");
 
                     b.HasData(
-                        new { Id = "dada8e7a-2cbc-4af9-a8fb-99ed3116e028", AccessFailedCount = 0, ConcurrencyStamp = "f88a77c1-dc88-4335-b6b3-6bae03c09398", Email = "jacob@jacob.com", EmailConfirmed = true, LockoutEnabled = false, NormalizedEmail = "JACOB@JACOB.COM", NormalizedUserName = "JACOB@JACOB.COM", PasswordHash = "AQAAAAEAACcQAAAAEOcBEXV8ftB38oOR5QDhKgd+XcG8e8zsU9yd+MktbCQaYWyqO2+HGoqCsYbaReX0Fw==", PhoneNumberConfirmed = false, SecurityStamp = "99604ecb-8085-4ea9-bf3b-93108b43d136", TwoFactorEnabled = false, UserName = "jacob@jacob.com", FirstName = "Jacob", LastName = "Henderson" }
+                        new { Id = "497fbd7a-37c2-4f21-9889-db7c57e21763", AccessFailedCount = 0, ConcurrencyStamp = "54dec0ca-0d1f-417b-b58e-f0955d428bab", Email = "jacob@jacob.com", EmailConfirmed = true, LockoutEnabled = false, NormalizedEmail = "JACOB@JACOB.COM", NormalizedUserName = "JACOB@JACOB.COM", PasswordHash = "AQAAAAEAACcQAAAAEBjjVkXfIZTM0SxntluLRQi6bSGkem4C53mki7MIdjZQFO+JjQGr/M/VJp1hwA8IHA==", PhoneNumberConfirmed = false, SecurityStamp = "75e1f979-8be3-40f1-8671-1bf638eb8b29", TwoFactorEnabled = false, UserName = "jacob@jacob.com", FirstName = "Jacob", LastName = "Henderson" }
                     );
                 });
 
@@ -288,8 +291,7 @@ namespace What2Watch.Migrations
                 {
                     b.HasOne("What2Watch.Models.User", "User")
                         .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("UserId1");
                 });
 #pragma warning restore 612, 618
         }

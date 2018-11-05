@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -23,9 +25,14 @@ namespace What2Watch.Controllers
 
         // GET: api/Movies
         [HttpGet]
-        public IEnumerable<Movie> GetMovie()
+        [Authorize]
+        //[EnableCors ("What2WatchPolicy")]
+        public async Task<IEnumerable<Movie>> GetMovie()
         {
-            return _context.Movie;
+            string userName = User.Identity.Name;
+            User user = await _context.User.SingleAsync(u => u.UserName == userName);
+            var userMovies = _context.Movie.Where(r => r.UserId == user.Id);
+            return userMovies;
         }
 
         // GET: api/Movies/5
@@ -49,6 +56,7 @@ namespace What2Watch.Controllers
 
         // PUT: api/Movies/5
         [HttpPut("{id}")]
+        [Authorize]
         public async Task<IActionResult> PutMovie([FromRoute] int id, [FromBody] Movie movie)
         {
             if (!ModelState.IsValid)
@@ -84,8 +92,13 @@ namespace What2Watch.Controllers
 
         // POST: api/Movies
         [HttpPost]
+        [Authorize]
         public async Task<IActionResult> PostMovie([FromBody] Movie movie)
         {
+            string userName = User.Identity.Name;
+            User user = _context.User.Single(u => u.UserName == userName);
+            movie.UserId = user.Id;
+            ModelState.Remove("UserId");
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
@@ -99,6 +112,7 @@ namespace What2Watch.Controllers
 
         // DELETE: api/Movies/5
         [HttpDelete("{id}")]
+        [Authorize]
         public async Task<IActionResult> DeleteMovie([FromRoute] int id)
         {
             if (!ModelState.IsValid)
