@@ -86,21 +86,25 @@ const Api = Object.create({}, {
         }
     },
     addPersonalRating: {
-        value: (token, title, summary, picture, rating, yourRating, extapiid, userid) => {
-            return fetch("https://localhost:5001/api/movies", {
+        value: (token, MovieObject) => {
+            return fetch(`https://localhost:5001/api/movies/${MovieObject.movieId}`, {
                 method: "PUT",
                 headers: {
-                    "Authorization": `bearer ${token}`
+                    "Authorization": `bearer ${token}`,
+                    "Content-Type": "application/json; charset=utf-8"
                 },
-                body: JSON.stringify({
-                    Title: title,
-                    Summary: summary,
-                    Picture: picture,
-                    Rating: rating,
-                    UserRating: yourRating,
-                    ExtApiId: extapiid,
-                    UserId: userid
-                })
+                body: JSON.stringify(MovieObject)
+            })
+            // .then(res => res.json())
+        }
+    },
+    deleteMovieFromLibrary: {
+        value: (id, token) => {
+            return fetch(`https://localhost:5001/api/movies/${id}`, {
+                method: "DELETE",
+                headers: {
+                    "Authorization": `bearer ${token}`
+                }
             })
         }
     }

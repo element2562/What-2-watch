@@ -35,7 +35,7 @@ export default props => {
         <Image src={url} width="125" height="220" thumbnail />
         <p><strong>Summary: </strong>{props.movie.overview}</p>
         <p><strong>Rating: </strong>{props.movie.vote_average}</p>
-        <Button id={props.index} onClick={addGame}></Button>
+        <Button id={props.index} onClick={addGame}>Add</Button>
         </Well>
         </ListGroupItem>
         </ListGroup>

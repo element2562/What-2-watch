@@ -7,15 +7,17 @@ export default class MovieLibrary extends Component
     state = {
         movies: [],
     }
-
-    componentDidMount()
-    {      
+    refreshList = () => {
         Api.getUsersMovies(sessionStorage.getItem("What2Watch_token"))
         .then(res => {
             this.setState({
                 movies: res
             })
         })
+    }
+    componentDidMount()
+    {      
+        this.refreshList();
     }
 
     render()
@@ -25,8 +27,8 @@ export default class MovieLibrary extends Component
             return(
                 <React.Fragment>
                 <PageHeader id="libraryTitle">{this.props.userInfo.firstName} {this.props.userInfo.lastName}'s Library</PageHeader>
-               {this.state.movies.map(movie => (
-                   <LibraryMovies movie={movie} />
+               {this.state.movies.map((movie, index) => (
+                   <LibraryMovies movie={movie} index={index} movies={this.state.movies} refresh={this.refreshList} />
                ))}
                </React.Fragment>
             )

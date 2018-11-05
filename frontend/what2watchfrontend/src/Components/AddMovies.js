@@ -7,7 +7,15 @@ export default class extends Component {
         results: [],
         library: []
     }
-
+    componentDidMount()
+    {      
+        Api.getUsersMovies(sessionStorage.getItem("What2Watch_token"))
+        .then(res => {
+            this.setState({
+                library: res
+            })
+        })
+    }
     render(){
         return(
             <React.Fragment>
@@ -18,10 +26,20 @@ export default class extends Component {
                         .then(response => {
                             this.setState({
                                 results: response.results
-                            })  
-                            // console.log(this.state.results);
-                            
-                            
+                            })         
+                            this.state.library.map(item => {
+                                this.state.results.map((result, index, object) => {
+                                // console.log(item.extApiId, result.id)
+                                    if(item.extApiId === result.id)
+                                    {
+                                        object.splice(index, 1);
+                                    }
+                                    this.setState({
+                                        results: response.results
+                                    })    
+                                })
+                            })
+              
                         })
                     }
                     }} />
