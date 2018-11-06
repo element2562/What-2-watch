@@ -21,14 +21,14 @@ return(
     <NavItem href="/recommend">
         Recommendation
     </NavItem>
-{/* <NavDropdown title={username} id="user-dropdown">
-<MenuItem id="userDrop" onClick={() => {
-      sessionStorage.removeItem("User")
-      window.location.reload();
-    }}>
-      Logout
-    </MenuItem>
-</NavDropdown> */}
+ <NavDropdown title={this.props.userInfo.userName} id="user-dropdown">
+ <MenuItem id="userDrop" onClick={() => {
+       sessionStorage.removeItem("What2Watch_token");
+       this.props.history.push("/");
+     }}>
+       Logout
+     </MenuItem>
+ </NavDropdown>
 </Nav>
 </Navbar>
 

@@ -5,6 +5,7 @@ import NavBar from "./Components/NavBar";
 import MovieLibrary from "./Components/MovieLibrary";
 import Api from "./Components/ApiManager";
 import AddMovies from "./Components/AddMovies";
+import Recommendation from "./Components/Recommendation";
 export default class extends Component {
     state = {
         userInfo: {},
@@ -26,13 +27,16 @@ export default class extends Component {
         }
             return(
                 <React.Fragment>
-                <Route path="/" component={NavBar} />
+                <Route path="/" render={props =>
+                    <NavBar {...props} userInfo={this.state.userInfo} />} />
                 <Route exact path="/" render={props => 
                     <MovieLibrary {...props} userInfo={this.state.userInfo} />
                 } />
                 <Route exact path="/addmovies" render={props =>
                     <AddMovies {...props} userInfo={this.state.userInfo} />
                 } />
+                <Route exact path="/recommend" render={props => 
+                    <Recommendation {...props} />} />
                 {/* <Route exact path="/addmovies" component={Addmo} */}
                 </React.Fragment>
             )

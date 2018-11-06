@@ -66,8 +66,13 @@ export default class extends Component {
             })
         })        .then(res => res.text())
         .then(OfficialAPIToken => {
+            if(OfficialAPIToken !== null)
+            {
             sessionStorage.setItem("What2Watch_token", OfficialAPIToken)
             this.props.history.push("/");
+            } else {
+                alert("Looks like your login information is incorrect, please try again!")
+            }
 
         })
     }
