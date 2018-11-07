@@ -27,7 +27,17 @@ code {
   overflow: hidden;
   margin-bottom: 20px;
 }
-
+.LibraryCard {
+  margin-top: 10px;
+  margin-right: 10px;
+  text-align: center;
+  height: 375px !important;
+  overflow-y: visible;
+  margin-bottom: 20px;
+}
+.star-container {
+  margin-bottom: 4px;
+}
 .SearchCard:hover .infoToShow{
   display: block;
 }

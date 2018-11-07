@@ -11,7 +11,6 @@ export default props => {
         title={props.movie.title}
       >
         <p><strong>Summary: </strong>{props.movie.overview}</p>
-        <p><strong>Rating: </strong>{props.movie.vote_average}</p>
       </Popover>
     )
     if(props.movie.poster_path !== null)
@@ -42,6 +41,7 @@ export default props => {
         <Well width="250">
         <Image src={url} width="125" height="225" thumbnail />
         <br />
+        <p><strong>Rating: </strong>{props.movie.vote_average}</p>
         <Button id={props.index} onClick={addGame}>Add</Button>
         </Well>
         </OverlayTrigger>
