@@ -1,7 +1,5 @@
 import React, { Component } from "react";
-import { Form, Well, FormGroup, InputGroup, FormControl, ControlLabel, Button, Modal, PageHeader } from "react-bootstrap";
-import Api from "./ApiManager";
-import { BrowserRouter, Redirect, Switch } from "react-router-dom";
+import { Form, FormGroup, InputGroup, FormControl, ControlLabel, Button, Modal, PageHeader } from "react-bootstrap";
 export default class extends Component {
     state = {
         show: false,
@@ -33,7 +31,13 @@ export default class extends Component {
     handleRegister = (e) => {
         e.preventDefault()
 
-
+        if(this.state.firstname.length < 1 ||
+            this.state.lastname.length < 1 || 
+            this.state.registerUsername.length < 1 ||
+            this.state.registerPassword.length < 1 ) {
+                alert("You must fill out all forms to contiune!")
+            }
+        else {
         fetch("https://localhost:5001/api/token", {
             method: "POST",
             headers: {
@@ -52,9 +56,9 @@ export default class extends Component {
             this.props.history.push("/");
         })
     }
+    }
     handleLogin = (e) => {
         e.preventDefault();
-
         fetch("https://localhost:5001/api/token", {
             method: "POST",
             headers: {
@@ -66,8 +70,13 @@ export default class extends Component {
             })
         })        .then(res => res.text())
         .then(OfficialAPIToken => {
+            if(OfficialAPIToken !== null)
+            {
             sessionStorage.setItem("What2Watch_token", OfficialAPIToken)
             this.props.history.push("/");
+            } else {
+                alert("Looks like your login information is incorrect, please try again!")
+            }
 
         })
     }
@@ -84,19 +93,26 @@ export default class extends Component {
             <Modal.Title>Register</Modal.Title>
             </Modal.Header>
             <Modal.Body>
-                <p><em>Create a username and password and click register to continue!</em></p>
+                <p><em>Fill out all forms and click register to continue!</em></p>
                 <Form>
                 <InputGroup>
-                <label>First Name</label><input onChange={e => {
+                <label>First Name: </label> <br />
+                <input onChange={e => {
                     this.setState({firstname: e.target.value})
                 }} />
-                <label>First Name</label><input onChange={e => {
+                <br />
+                <label>Last Name: </label> <br />
+                <input onChange={e => {
                     this.setState({lastname: e.target.value})
                 }} />
-                <label>Username</label><input  onChange={e => {
+                <br />
+                <label>Username: </label> <br />
+                <input  onChange={e => {
                     this.setState({registerUsername: e.target.value})
                 }}/>
-                <label>Password</label><input type="password" onChange={e => {
+                <br />
+                <label>Password: </label> <br />
+                <input type="password" onChange={e => {
                     this.setState({registerPassword: e.target.value})
                 }}/>
                 </InputGroup>
@@ -109,8 +125,7 @@ export default class extends Component {
             </Modal.Footer>
             </Modal>
             </div>
-            <div>
-            <Well id="Login">
+            <div className="login">
             <FormGroup>
             <Form>
                 <ControlLabel>Username</ControlLabel>
@@ -125,7 +140,6 @@ export default class extends Component {
                 <Button onClick={this.handleShow}>Register</Button>
             </Form>
             </FormGroup>
-            </Well>
             </div>
             </div>
         )

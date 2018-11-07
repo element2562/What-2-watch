@@ -107,6 +107,17 @@ const Api = Object.create({}, {
                 }
             })
         }
+    },
+    recommendAMovie: {
+        value: (id) => {
+            return fetch(`https://api.themoviedb.org/3/movie/${id}/recommendations?api_key=b88e789d5af41aa1810a1e0c9a2cc6c0`, {
+                headers: {
+                    "api_key": "b88e789d5af41aa1810a1e0c9a2cc6c0",
+                    "Accept": "application/json",
+                }
+            })
+            .then(res => res.json())
+        }
     }
 })
 export default Api;

@@ -6,15 +6,61 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: azure;
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
-
+#root {
+  background-color: azure;
+}
+.infoToShow {
+  display: none;
+}
 .SearchCard {
-  width: 50%; 
-  margin: 10px auto;
+  margin-top: 10px;
+  margin-right: 10px;
   text-align: center;
+  height: 350px !important;
+  overflow: hidden;
+  margin-bottom: 20px;
+}
+
+.SearchCard:hover .infoToShow{
+  display: block;
+}
+.recommendations {
+  text-align: center;
+}
+.login {
+  margin: 0 auto;
+  width: 50vw;
+}
+.library {
+  text-align: center;
+  margin: 0 auto;
+}
+.search {
+  text-align: center;
+}
+.list-group {
+  width: 50vw;
+  margin: 10px auto;
+}
+.well {
+  background-color: azure;
+}
+.list-group-item {
+  background-color: lightcyan;
+}
+.container {
+  background-color: lightcyan; 
+}
+.navbar {
+  background-color: lightcyan;
+}
+a:focus {
+  background-color: azure !important;
 }

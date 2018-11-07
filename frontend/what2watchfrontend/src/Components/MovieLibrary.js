@@ -25,20 +25,20 @@ export default class MovieLibrary extends Component
         if(this.state.movies.length > 0)
         {
             return(
-                <React.Fragment>
+                <div className="library">
                 <PageHeader id="libraryTitle">{this.props.userInfo.firstName} {this.props.userInfo.lastName}'s Library</PageHeader>
                {this.state.movies.map((movie, index) => (
-                   <LibraryMovies movie={movie} index={index} movies={this.state.movies} refresh={this.refreshList} />
+                   <LibraryMovies key={movie.movieId} movie={movie} index={index} movies={this.state.movies} refresh={this.refreshList} />
                ))}
-               </React.Fragment>
+               </div>
             )
         }
         else {
             return(
-                <React.Fragment>
+                <div className="library">
                 <PageHeader id="libraryTitle">{this.props.userInfo.firstName} {this.props.userInfo.lastName}'s Library</PageHeader>
                 <h3>Click on the <strong>Add Movies</strong> tab to populate your library!</h3>
-                </React.Fragment>
+                </div>
             )
         }
     }
