@@ -10,11 +10,17 @@ export default class extends Component {
     }
     addPersonalRating = (e) => {
         this.props.movies[e.target.id].userRating = this.state.value;
+        if(Number.parseInt(this.state.value) > 10 || Number.parseInt(this.state.value) < 0)
+        {
+            alert("Your rating must be between 1 and 10!")
+        }
+        else{
         Api.addPersonalRating(sessionStorage.getItem("What2Watch_token"), this.props.movies[e.target.id])
         .then(res => {
             this.goAwayForm();
             this.props.refresh();
         })
+    }
     }
     deleteMovie = (e) => {
         Api.deleteMovieFromLibrary(this.props.movies[e.target.id].movieId, sessionStorage.getItem("What2Watch_token"))
@@ -40,7 +46,7 @@ export default class extends Component {
     render() {
     return(
         <React.Fragment>
-        <div className="SearchCard">
+        <div>
         
         <ListGroup>
         <ListGroupItem>

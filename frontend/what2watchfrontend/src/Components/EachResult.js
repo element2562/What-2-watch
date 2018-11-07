@@ -1,8 +1,19 @@
 import React, { Component } from "react";
-import {Button, Image, ListGroup, ListGroupItem, Well} from "react-bootstrap"
+import {Button, Image, OverlayTrigger, Well, Popover, Row, Col} from "react-bootstrap"
 import Api from "./ApiManager";
 export default props => {
     let url = ""
+    const popover = (
+        <Popover
+        className="infoToShow"
+        id="popover-basic"
+        placement="left"
+        title={props.movie.title}
+      >
+        <p><strong>Summary: </strong>{props.movie.overview}</p>
+        <p><strong>Rating: </strong>{props.movie.vote_average}</p>
+      </Popover>
+    )
     if(props.movie.poster_path !== null)
     {
         url = `https://image.tmdb.org/t/p/original${props.movie.poster_path}`;
@@ -25,21 +36,16 @@ export default props => {
         Api.addMovieToLibrary(sessionStorage.getItem("What2Watch_token"), props.results[e.target.id].title, props.results[e.target.id].overview, props.results[e.target.id].vote_average, props.results[e.target.id].id, addUrl)
     }
     return(
-        <React.Fragment>
+        <Col md={3}>
         <div className="SearchCard">
-        
-        <ListGroup>
-        <ListGroupItem>
-        <h3>{props.movie.title}</h3>
-        <Well width="200">
-        <Image src={url} width="125" height="220" thumbnail />
-        <p><strong>Summary: </strong>{props.movie.overview}</p>
-        <p><strong>Rating: </strong>{props.movie.vote_average}</p>
+        <OverlayTrigger trigger="hover" placement="bottom" overlay={popover}>
+        <Well width="250">
+        <Image src={url} width="125" height="225" thumbnail />
+        <br />
         <Button id={props.index} onClick={addGame}>Add</Button>
         </Well>
-        </ListGroupItem>
-        </ListGroup>
+        </OverlayTrigger>
         </div>
-        </React.Fragment>
+        </Col>
     )
 }

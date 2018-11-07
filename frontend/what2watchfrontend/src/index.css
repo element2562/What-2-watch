@@ -12,9 +12,21 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
-
+#root {
+  background-color: lightgray;
+}
+.infoToShow {
+  display: none;
+}
 .SearchCard {
-  width: 50%; 
-  margin: 10px auto;
+  margin-top: 10px;
+  margin-right: 10px;
   text-align: center;
+  height: 350px !important;
+  overflow: hidden;
+  margin-bottom: 20px;
+}
+
+.SearchCard:hover .infoToShow{
+  display: block;
 }

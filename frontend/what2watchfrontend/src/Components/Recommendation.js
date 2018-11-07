@@ -51,7 +51,6 @@ export default class Recommend extends Component {
             </HelpBlock>
             <Button onClick={this.handleRecommendation}>What2Watch</Button>
             {this.state.show ? (
-                <div className="SearchCard">
                 <ListGroup>
                     <ListGroupItem>
                         <h3>{this.state.result.title}</h3>
@@ -63,7 +62,6 @@ export default class Recommend extends Component {
                         </Well>
                     </ListGroupItem>
                 </ListGroup>
-                </div>
             ) : null}
             </React.Fragment>
         )

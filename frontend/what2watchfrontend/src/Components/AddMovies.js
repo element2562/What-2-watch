@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Form, FormControl} from "react-bootstrap";
+import { Form, FormControl, Grid, Row} from "react-bootstrap";
 import Api from "./ApiManager";
 import EachResult from "./EachResult";
 export default class extends Component {
@@ -44,11 +44,13 @@ export default class extends Component {
                     }
                     }} />
             </Form>
-            <div className="searchContainer">
+            <Grid>
+            <Row className="show-grid">
                     {this.state.results.map((movie, index) => (
                         <EachResult key={index} id={index} movie={movie} results={this.state.results} index={index} userInfo={this.props.userInfo} />
                     ))}
-            </div>
+            </Row>
+            </Grid>
             </React.Fragment>
         )
     }
