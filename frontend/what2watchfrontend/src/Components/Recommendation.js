@@ -44,12 +44,19 @@ export default class Recommend extends Component {
     }
     render() {
         return(
-            <React.Fragment>
+            <div className="recommendations">
             <PageHeader>Recommendations!</PageHeader>
+            {this.state.library.length > 0 ? (
+            <div>
             <HelpBlock>
                 Click the button below to have a random movie recommended to you based on your library!
-            </HelpBlock>
+            </HelpBlock>    
             <Button onClick={this.handleRecommendation}>What2Watch</Button>
+            </div>
+            )
+            :
+            <HelpBlock>To use this feature, you must have movies in your Library! Go to the "Add Movies" section to find some of your favorites.</HelpBlock>
+            }
             {this.state.show ? (
                 <ListGroup>
                     <ListGroupItem>
@@ -63,7 +70,7 @@ export default class Recommend extends Component {
                     </ListGroupItem>
                 </ListGroup>
             ) : null}
-            </React.Fragment>
+            </div>
         )
     }
 }

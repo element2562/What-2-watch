@@ -1,5 +1,5 @@
-import React, { Component } from "react";
-import {Button, Image, OverlayTrigger, Well, Popover, Row, Col} from "react-bootstrap"
+import React from "react";
+import {Button, Image, OverlayTrigger, Well, Popover, Col} from "react-bootstrap"
 import Api from "./ApiManager";
 export default props => {
     let url = ""
