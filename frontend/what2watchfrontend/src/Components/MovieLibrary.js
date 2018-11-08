@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { PageHeader } from "react-bootstrap";
+import { PageHeader, Grid, Row } from "react-bootstrap";
 import Api from "./ApiManager";
 import LibraryMovies from "./LibraryMovies";
 export default class MovieLibrary extends Component 
@@ -27,9 +27,13 @@ export default class MovieLibrary extends Component
             return(
                 <div className="library">
                 <PageHeader id="libraryTitle">{this.props.userInfo.firstName} {this.props.userInfo.lastName}'s Library</PageHeader>
+                <Grid>
+                <Row>
                {this.state.movies.map((movie, index) => (
                    <LibraryMovies key={movie.movieId} movie={movie} index={index} movies={this.state.movies} refresh={this.refreshList} />
                ))}
+               </Row>
+               </Grid>
                </div>
             )
         }

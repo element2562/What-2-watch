@@ -16,15 +16,17 @@ export default class extends Component {
         if(this.isAuthenticated())
         {
             if(this.state.executed === false){
-            Api.getUsers(sessionStorage.getItem("What2Watch_token"))
-            .then(res => {
-                this.setState({
-                    userInfo: res,
-                    executed: true
+                Api.getUsers(sessionStorage.getItem("What2Watch_token"))
+                .then(res => {
+                    this.setState({
+                        userInfo: res,
+                        executed: true
+                    })
+                    
                 })
-                
-            })
-        }
+            }
+        // console.log("Initializing navbar", this.state.userInfo);
+        
             return(
                 <React.Fragment>
                 <Route path="/" render={props =>

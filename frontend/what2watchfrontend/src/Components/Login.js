@@ -72,8 +72,8 @@ export default class extends Component {
         .then(OfficialAPIToken => {
             if(OfficialAPIToken !== null)
             {
-            sessionStorage.setItem("What2Watch_token", OfficialAPIToken)
-            this.props.history.push("/");
+                sessionStorage.setItem("What2Watch_token", OfficialAPIToken)
+                this.props.history.push("/");
             } else {
                 alert("Looks like your login information is incorrect, please try again!")
             }
@@ -87,7 +87,6 @@ export default class extends Component {
             Welcome to What2Watch <br />
             <small id="subtextHeader">Sign in or register to continue</small>
             </PageHeader>
-            <div>
             <Modal show={this.state.show}>
             <Modal.Header>
             <Modal.Title>Register</Modal.Title>
@@ -124,7 +123,6 @@ export default class extends Component {
             <Button bsStyle="primary" onClick={this.handleRegister}>Register</Button>
             </Modal.Footer>
             </Modal>
-            </div>
             <div className="login">
             <FormGroup>
             <Form>

@@ -1,11 +1,13 @@
 import React, { Component } from "react";
 import Api from "./ApiManager";
-import { PageHeader, HelpBlock, Button, ListGroup, ListGroupItem, Image, Well } from "react-bootstrap";
+import { PageHeader, HelpBlock, Button, ListGroup, ListGroupItem, Image, Well, Radio, DropdownButton, MenuItem } from "react-bootstrap";
 export default class Recommend extends Component {
     state = {
         library: [],
         result: {},
-        show: false
+        show: false,
+        selected: false,
+        selectedMovieId: 0
     }
 
     componentDidMount() {
@@ -16,7 +18,18 @@ export default class Recommend extends Component {
             })
         })
     }
-
+    randomSelect = () => {
+        this.setState({
+            selected: false,
+            show: false
+        })
+    }
+    movieSelect = () => {
+        this.setState({
+            selected: true,
+            show: false
+        })
+    }
     addMovie = (e) => {
         let addUrl = ""
         if(this.state.result.poster_path !== null)
@@ -30,10 +43,8 @@ export default class Recommend extends Component {
         e.target.textContent = "Added";
         Api.addMovieToLibrary(sessionStorage.getItem("What2Watch_token"), this.state.result.title, this.state.result.overview, this.state.result.vote_average, this.state.result.id, addUrl)
     }
-
-    handleRecommendation = () => {
-        let libraryMovie = this.state.library[Math.floor(Math.random()*this.state.library.length)]
-        Api.recommendAMovie(libraryMovie.extApiId)
+    handleRecommendation = (movieId) => {
+        Api.recommendAMovie(movieId)
         .then(res => {
             let recommendation = res.results[Math.floor(Math.random()*res.results.length)]
             this.setState({
@@ -41,6 +52,19 @@ export default class Recommend extends Component {
                 show: true
             })
         })
+    }
+    handleMovieRecommendation = (e) => {
+        this.handleRecommendation(e)
+    }
+    // handleMovieSelection = (e) => {
+    //     this.setState({
+    //         selectedMovieId: e
+    //     })
+    // }
+    handleRandomRecommendation = () => {
+        let libraryMovie = this.state.library[Math.floor(Math.random()*this.state.library.length)];
+        this.handleRecommendation(libraryMovie.extApiId)
+
     }
     render() {
         return(
@@ -50,8 +74,19 @@ export default class Recommend extends Component {
             <div>
             <HelpBlock>
                 Click the button below to have a random movie recommended to you based on your library!
-            </HelpBlock>    
-            <Button onClick={this.handleRecommendation}>What2Watch</Button>
+            </HelpBlock>
+            <Radio name="select" onClick={this.randomSelect} defaultChecked>Completely Random</Radio>
+            <Radio name="select" onClick={this.movieSelect}>Select a movie</Radio>
+            {this.state.selected ? (
+                <DropdownButton title="Your Movies" >
+                {this.state.library.map(item => (
+                    <MenuItem eventKey={item.extApiId} id={item.extApiId} onSelect={this.handleMovieRecommendation}>{item.title}</MenuItem>
+                ))}
+                </DropdownButton>
+             ) : (
+                <Button onClick={this.handleRandomRecommendation}>What2Watch</Button>
+             )}
+            
             </div>
             )
             :
