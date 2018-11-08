@@ -48,6 +48,9 @@ code {
   margin: 0 auto;
   width: 50vw;
 }
+#PageHeader {
+  text-align: center;
+}
 .library {
   text-align: center;
   margin: 0 auto;

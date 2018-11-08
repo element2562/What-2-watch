@@ -11,7 +11,7 @@ export default class extends Component {
     popover = (
         <Popover
         className="infoToShow"
-        id="popover-basic"
+        id="popover-trigger-hover-focus"
         placement="left"
         title={this.props.movie.title}
       >
@@ -55,15 +55,12 @@ export default class extends Component {
     return(
         <Col md={3}>
         <div className="LibraryCard">
-        <h3>{this.props.movie.title}</h3>
         <Well>
-        <OverlayTrigger trigger="hover" placement="bottom" overlay={this.popover}>
+        <OverlayTrigger trigger={['hover', 'focus']} placement="bottom" overlay={this.popover}>
         <Image src={this.props.movie.picture} width="125" height="220" thumbnail />
         </OverlayTrigger>
         <p><strong>Rating: </strong>{this.props.movie.rating}</p>
-        {this.props.movie.userRating ? (
-            <p><strong>Your Rating: </strong>{this.props.movie.userRating}</p>
-        ) : <HelpBlock>Click the Rate button to give your rating!</HelpBlock>}
+        <HelpBlock>Use the stars to show what you thought!</HelpBlock>
         <div className="starStuff">
         <StarRatings
             rating={this.props.movie.userRating !== null ? Number.parseInt(this.props.movie.userRating)/2 : 0}
@@ -71,15 +68,10 @@ export default class extends Component {
             starHoverColor="gold"
             changeRating={this.handleStarRating}
             numberOfStars={5}
-            name={this.props.index}
+            name={this.props.index.toString()}
             starDimension="15px"
         />
         </div>
-        {this.state.show ? <RatingForm 
-                            getRating={this.getRating} 
-                            addPersonalRating={this.addPersonalRating}
-                            goAwayForm={this.goAwayForm}
-                            index={this.props.index} /> : null}
         <Button id={this.props.index} onClick={this.deleteMovie}>Delete</Button>
         </Well>
        
