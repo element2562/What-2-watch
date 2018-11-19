@@ -86,7 +86,7 @@ const Api = Object.create({}, {
             .then(res => res.json())
         }
     },
-    addPersonalRating: {
+    changeMovie: {
         value: (token, MovieObject) => {
             return fetch(`https://localhost:5001/api/movies/${MovieObject.movieId}`, {
                 method: "PUT",

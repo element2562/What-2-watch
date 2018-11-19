@@ -21,22 +21,20 @@ export default class extends Component {
     handleStarRating = (newValue, index) => {
         // console.log(index);
         
-        this.addPersonalRating(index, newValue);
+        this.changeMovie(index, newValue);
     }
     addPersonalRating = (index, value) => {
         this.props.movies[index].userRating = value * 2;
-        Api.addPersonalRating(sessionStorage.getItem("What2Watch_token"), this.props.movies[index])
+        Api.changeMovie(sessionStorage.getItem("What2Watch_token"), this.props.movies[index])
         .then(res => {
             this.props.refresh();
         })
     }
     userHasWatched = (e) => {
-        if(e.target.checked){
-            console.log("It's checked");
-        }
-    }
-    deleteMovie = (e) => {
-        Api.deleteMovieFromLibrary(this.props.movies[e.target.id].movieId, sessionStorage.getItem("What2Watch_token"))
+        let index = e.target.name;
+        let isChecked = e.target.checked
+        this.props.movies[index].hasWatched = isChecked;
+        Api.changeMovie(sessionStorage.getItem("What2Watch_token"), this.props.movies[index])
         .then(res => {
             this.props.refresh();
         })
@@ -78,8 +76,8 @@ export default class extends Component {
             starDimension="15px"
         />
         </div> */}
-        <input type="checkbox" onChange={this.userHasWatched}/>
-        <Button id={this.props.index} onClick={this.deleteMovie}>Delete</Button>
+        <input type="checkbox" onChange={this.userHasWatched} name={this.props.index} />
+        <Button id={this.props.index} onClick={this.props.deleteMovie}>Delete</Button>
         </Well>
        
         </div>
