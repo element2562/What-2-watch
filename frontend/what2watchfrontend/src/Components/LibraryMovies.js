@@ -30,6 +30,11 @@ export default class extends Component {
             this.props.refresh();
         })
     }
+    userHasWatched = (e) => {
+        if(e.target.checked){
+            console.log("It's checked");
+        }
+    }
     deleteMovie = (e) => {
         Api.deleteMovieFromLibrary(this.props.movies[e.target.id].movieId, sessionStorage.getItem("What2Watch_token"))
         .then(res => {
@@ -51,6 +56,7 @@ export default class extends Component {
             show: false
         })
     }
+    
     render() {
     return(
         <Col md={3}>
@@ -61,7 +67,7 @@ export default class extends Component {
         </OverlayTrigger>
         <p><strong>Rating: </strong>{this.props.movie.rating}</p>
         <HelpBlock>Use the stars to show what you thought!</HelpBlock>
-        <div className="starStuff">
+        {/* <div className="starStuff">
         <StarRatings
             rating={this.props.movie.userRating !== null ? Number.parseInt(this.props.movie.userRating)/2 : 0}
             starRatedColor="gold"
@@ -71,7 +77,8 @@ export default class extends Component {
             name={this.props.index.toString()}
             starDimension="15px"
         />
-        </div>
+        </div> */}
+        <input type="checkbox" onChange={this.userHasWatched}/>
         <Button id={this.props.index} onClick={this.deleteMovie}>Delete</Button>
         </Well>
        

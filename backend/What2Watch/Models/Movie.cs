@@ -26,6 +26,8 @@ namespace What2Watch.Models
         [Required]
         public double Rating { get; set; }
 
+        public bool HasWatched { get; set; }
+
         public double? UserRating { get; set; }
 
         //[Required]

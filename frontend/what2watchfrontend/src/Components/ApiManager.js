@@ -67,6 +67,7 @@ const Api = Object.create({}, {
                     Rating: rating,
                     ExtApiId: extapi,
                     Picture: picture,
+                    HasWatched: false
                 })
             }
         )
@@ -98,6 +99,7 @@ const Api = Object.create({}, {
             // .then(res => res.json())
         }
     },
+
     deleteMovieFromLibrary: {
         value: (id, token) => {
             return fetch(`https://localhost:5001/api/movies/${id}`, {
