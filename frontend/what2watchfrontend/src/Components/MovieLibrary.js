@@ -7,7 +7,8 @@ export default class MovieLibrary extends Component
 {
     state = {
         movies: [],
-        watchedMovies: []
+        watchedMovies: [],
+        nonWatchedMovies: []
     }
     refreshList = () => {
         Api.getUsersMovies(sessionStorage.getItem("What2Watch_token"))
@@ -16,7 +17,10 @@ export default class MovieLibrary extends Component
             res.forEach((item, index) => {
                 if(item.hasWatched){
                     this.state.watchedMovies.push(item);
-                    res.splice(index, 1)
+                    // res.splice(index, 1)
+                }
+                else{
+                    this.state.nonWatchedMovies.push(item);
                 }
             })
             this.setState({
@@ -28,8 +32,14 @@ export default class MovieLibrary extends Component
             
         })
     }
-    deleteMovie = (e) => {
-        Api.deleteMovieFromLibrary(this.state.movies[e.target.id].movieId, sessionStorage.getItem("What2Watch_token"))
+    deleteWatchedMovie = (e) => {
+        Api.deleteMovieFromLibrary(this.state.watchedMovies[e.target.id].movieId, sessionStorage.getItem("What2Watch_token"))
+        .then(res => {
+            this.props.refresh();
+        })
+    }
+    deleteNonWatchedMovie = (e) => {
+        Api.deleteMovieFromLibrary(this.state.nonWatchedMovies[e.target.id].movieId, sessionStorage.getItem("What2Watch_token"))
         .then(res => {
             this.props.refresh();
         })
@@ -50,15 +60,15 @@ export default class MovieLibrary extends Component
                 {this.state.movies.length < 1 ? <h5>No movies to show.</h5> :
                 (<Grid>
                 <Row>
-               {this.state.movies.map((movie, index, object) => (
+               {this.state.nonWatchedmovies.map((movie, index, object) => (
                     <LibraryMovies 
                         key={movie.movieId} 
                         movie={movie} 
                         object={object} 
                         index={index} 
-                        movies={this.state.movies} 
+                        movies={this.state.nonWatchedmovies} 
                         refresh={this.refreshList}
-                        deleteMovie={this.deleteMovie}
+                        deleteMovie={this.deleteNonWatchedMovie}
                     />
                ))}
                </Row>
@@ -75,9 +85,9 @@ export default class MovieLibrary extends Component
                         movie={movie} 
                         object={object} 
                         index={index} 
-                        movies={this.state.movies} 
+                        movies={this.state.watchedMovies} 
                         refresh={this.refreshList}
-                        deleteMovie={this.deleteMovie}  
+                        deleteMovie={this.deleteWatchedMovie}  
                         />
                 ))}
                </Row>
